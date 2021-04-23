@@ -60,4 +60,12 @@ export const GlobalStyle = createGlobalStyle`
   h2{
     font-size: 1.5rem;
   }
+
+  .wrapper{
+    display: flex;
+
+    main{
+      flex: 1;
+    }
+  }
 `
