@@ -7,7 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  @media(max-width: 1000px){
+  @media(max-width: 1080px){
     html {
       font-size: 93.75%;
     }
@@ -26,15 +26,22 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.text};
+    background: ${({ theme }) => theme.colors.gray50};
+    color: ${({ theme }) => theme.colors.gray500};
   }
 
   body,
   input,
   textarea,
   button {
-    font: 400 16px "Inter", sans-serif;
+    font: 500 1rem "Inter", sans-serif;
+    color: ${({ theme }) => theme.colors.gray500};
+  }
+
+  h1, h2, h3 ,h4 ,h5, h5{
+    font-weight: 600;
+    font-family: Lexend, sans-serif;
+    color: ${({ theme }) => theme.colors.gray800};
   }
 
   button {
@@ -44,5 +51,13 @@ export const GlobalStyle = createGlobalStyle`
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2{
+    font-size: 1.5rem;
   }
 `
