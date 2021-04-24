@@ -1,24 +1,21 @@
 import { Request, Response } from "express";
-import { getCustomRepository } from "typeorm";
 
-import { SettingsRepository } from "../repositories/SettingsRepository";
+import { SettingsService } from "../services/settingsService";
 
+const settingsService = new SettingsService();
 class SettingsController {
   async create(req: Request, res: Response): Promise<any> {
     try {
       const { chat, username } = req.body;
-      const settingsRepository = getCustomRepository(SettingsRepository);
 
-      const settings = settingsRepository.create({
-        chat,
-        username,
-      });
-
-      await settingsRepository.save(settings);
+      const settings = await settingsService.create({ chat, username });
 
       return res.json(settings);
     } catch (error) {
       console.log("error: ", error);
+      if (error.message === "User already exists.") {
+        return res.status(401).json({ message: error.message });
+      }
       return res.status(500).json({ message: "Ocorreu um erro ao criar a configuração." });
     }
   }
@@ -27,9 +24,7 @@ class SettingsController {
     try {
       const { id } = req.params;
 
-      const settingsRepository = getCustomRepository(SettingsRepository);
-
-      const setting = await settingsRepository.findOneOrFail(id);
+      const setting = await settingsService.show(id);
 
       return res.json(setting);
     } catch (error) {
@@ -38,11 +33,9 @@ class SettingsController {
     }
   }
 
-  async index(req: Request, res:Response): Promise<any> {
+  async index(req: Request, res: Response): Promise<any> {
     try {
-      const settingsRepository = getCustomRepository(SettingsRepository);
-
-      const settings = await settingsRepository.find();
+      const settings = await settingsService.index();
 
       return res.json(settings);
     } catch (error) {
@@ -51,13 +44,11 @@ class SettingsController {
     }
   }
 
-  async delete(req: Request, res:Response): Promise<any> {
+  async delete(req: Request, res: Response): Promise<any> {
     try {
       const { id } = req.params;
 
-      const settingsRepository = getCustomRepository(SettingsRepository);
-
-      await settingsRepository.delete(id);
+      await settingsService.delete(id);
 
       return res.json({ message: "Configuração deletada com sucesso." });
     } catch (error) {
