@@ -6,16 +6,16 @@ const usersService = new UsersService();
 
 class UsersController {
   async create(req: Request, res: Response): Promise<Response> {
-    try {
-      const { email } = req.body;
+    // try {
+    //   const { email } = req.body;
 
-      const user = await usersService.create(email);
+    //   const user = await usersService.create(email);
 
-      return res.json(user);
-    } catch (error) {
-      console.log("error: ", error);
-      return res.status(500).json({ message: "Ocorreu um erro ao criar o usuário." });
-    }
+    //   return res.json(user);
+    // } catch (error) {
+    //   console.log("error: ", error);
+    //   return res.status(500).json({ message: "Ocorreu um erro ao criar o usuário." });
+    // }
   }
 
   async show(req: Request, res: Response): Promise<Response> {
