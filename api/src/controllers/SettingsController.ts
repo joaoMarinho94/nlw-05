@@ -3,8 +3,9 @@ import { Request, Response } from "express";
 import { SettingsService } from "../services/settingsService";
 
 const settingsService = new SettingsService();
+
 class SettingsController {
-  async create(req: Request, res: Response): Promise<any> {
+  async create(req: Request, res: Response): Promise<Response> {
     try {
       const { chat, username } = req.body;
 
@@ -20,7 +21,7 @@ class SettingsController {
     }
   }
 
-  async show(req: Request, res: Response): Promise<any> {
+  async show(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
 
@@ -33,7 +34,7 @@ class SettingsController {
     }
   }
 
-  async index(req: Request, res: Response): Promise<any> {
+  async index(req: Request, res: Response): Promise<Response> {
     try {
       const settings = await settingsService.index();
 
@@ -44,7 +45,7 @@ class SettingsController {
     }
   }
 
-  async delete(req: Request, res: Response): Promise<any> {
+  async delete(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
 
@@ -53,7 +54,7 @@ class SettingsController {
       return res.json({ message: "Configuração deletada com sucesso." });
     } catch (error) {
       console.log("error: ", error);
-      return res.status(500).json({ message: "Ocorreu um erro ao buscar as configurações." });
+      return res.status(500).json({ message: "Ocorreu um erro ao deletar a configuração." });
     }
   }
 }
