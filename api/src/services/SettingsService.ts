@@ -8,39 +8,37 @@ interface ISettingsCreate {
 }
 
 class SettingsService {
-  async create({ chat, username }: ISettingsCreate): Promise<any> {
-    const settingsRepository = getCustomRepository(SettingsRepository);
+  private settingsRepository: SettingsRepository;
 
-    const userAlreadyExists = await settingsRepository.findOne({
+  constructor() {
+    this.settingsRepository = getCustomRepository(SettingsRepository);
+  }
+
+  async create({ chat, username }: ISettingsCreate): Promise<any> {
+    const userAlreadyExists = await this.settingsRepository.findOne({
       username,
     });
 
     if (userAlreadyExists) throw new Error("User already exists.");
 
-    const settings = settingsRepository.create({
+    const settings = this.settingsRepository.create({
       chat,
       username,
     });
 
-    return await settingsRepository.save(settings);
+    return await this.settingsRepository.save(settings);
   }
 
   async show(id: string): Promise<any> {
-    const settingsRepository = getCustomRepository(SettingsRepository);
-
-    return await settingsRepository.findOneOrFail(id);
+    return await this.settingsRepository.findOneOrFail(id);
   }
 
   async index(): Promise<any> {
-    const settingsRepository = getCustomRepository(SettingsRepository);
-
-    return await settingsRepository.find();
+    return await this.settingsRepository.find();
   }
 
   async delete(id: string): Promise<void> {
-    const settingsRepository = getCustomRepository(SettingsRepository);
-
-    await settingsRepository.delete(id);
+    await this.settingsRepository.delete(id);
   }
 }
 

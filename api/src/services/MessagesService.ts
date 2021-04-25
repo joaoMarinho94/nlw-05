@@ -9,35 +9,33 @@ interface IMessageCreate{
 }
 
 class MessagesService {
-  async create({ admin_id, text, user_id }: IMessageCreate): Promise<any> {
-    const messagesRepository = getCustomRepository(MessagesRepository);
+  private messagesRepository: MessagesRepository;
 
-    const user = messagesRepository.create({
+  constructor() {
+    this.messagesRepository = getCustomRepository(MessagesRepository);
+  }
+
+  async create({ admin_id, text, user_id }: IMessageCreate): Promise<any> {
+    const user = this.messagesRepository.create({
       admin_id, user_id, text,
     });
 
-    return await messagesRepository.save(user);
+    return await this.messagesRepository.save(user);
   }
 
   async listByUser(user_id: string): Promise<any> {
-    const messagesRepository = getCustomRepository(MessagesRepository);
-
-    return await messagesRepository.find({
+    return await this.messagesRepository.find({
       where: { user_id },
       relations: ["user"],
     });
   }
 
   async index(): Promise<any> {
-    const messagesRepository = getCustomRepository(MessagesRepository);
-
-    return await messagesRepository.find();
+    return await this.messagesRepository.find();
   }
 
   async delete(id: string): Promise<void> {
-    const messagesRepository = getCustomRepository(MessagesRepository);
-
-    await messagesRepository.delete(id);
+    await this.messagesRepository.delete(id);
   }
 }
 

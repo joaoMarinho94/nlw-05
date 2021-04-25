@@ -2,13 +2,12 @@ import { Request, Response } from "express";
 
 import { MessagesService } from "../services/MessagesService";
 
-const messagesService = new MessagesService();
-
 class MessagesController {
   async create(req: Request, res: Response): Promise<Response> {
     try {
       const { admin_id, text, user_id } = req.body;
 
+      const messagesService = new MessagesService();
       const user = await messagesService.create({ admin_id, text, user_id });
 
       return res.json(user);
@@ -22,6 +21,7 @@ class MessagesController {
     try {
       const { id } = req.params;
 
+      const messagesService = new MessagesService();
       const setting = await messagesService.listByUser(id);
 
       return res.json(setting);
@@ -33,6 +33,7 @@ class MessagesController {
 
   async index(req: Request, res: Response): Promise<Response> {
     try {
+      const messagesService = new MessagesService();
       const settings = await messagesService.index();
 
       return res.json(settings);
@@ -46,6 +47,7 @@ class MessagesController {
     try {
       const { id } = req.params;
 
+      const messagesService = new MessagesService();
       await messagesService.delete(id);
 
       return res.json({ message: "Mensagem deletada com sucesso." });

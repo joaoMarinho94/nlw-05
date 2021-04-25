@@ -3,38 +3,40 @@ import { getCustomRepository } from "typeorm";
 import { UsersRepository } from "../repositories/UsersRepository";
 
 class UsersService {
-  async create(email: string): Promise<any> {
-    const usersRepository = getCustomRepository(UsersRepository);
+  private usersRepository: UsersRepository;
 
-    const userExists = await usersRepository.findOne({
+  constructor() {
+    this.usersRepository = getCustomRepository(UsersRepository);
+  }
+
+  async create(email: string): Promise<any> {
+    const userExists = await this.usersRepository.findOne({
       email,
     });
 
     if (userExists) return userExists;
 
-    const user = usersRepository.create({
+    const user = this.usersRepository.create({
       email,
     });
 
-    return await usersRepository.save(user);
+    return await this.usersRepository.save(user);
+  }
+
+  async findByEmail(email: string): Promise<any> {
+    return await this.usersRepository.findOne({ email });
   }
 
   async show(id: string): Promise<any> {
-    const usersRepository = getCustomRepository(UsersRepository);
-
-    return await usersRepository.findOneOrFail(id);
+    return await this.usersRepository.findOneOrFail(id);
   }
 
   async index(): Promise<any> {
-    const usersRepository = getCustomRepository(UsersRepository);
-
-    return await usersRepository.find();
+    return await this.usersRepository.find();
   }
 
   async delete(id: string): Promise<void> {
-    const usersRepository = getCustomRepository(UsersRepository);
-
-    await usersRepository.delete(id);
+    await this.usersRepository.delete(id);
   }
 }
 

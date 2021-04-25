@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
 
-import { SettingsService } from "../services/settingsService";
-
-const settingsService = new SettingsService();
+import { SettingsService } from "../services/SettingsService";
 
 class SettingsController {
   async create(req: Request, res: Response): Promise<Response> {
     try {
       const { chat, username } = req.body;
 
+      const settingsService = new SettingsService();
       const settings = await settingsService.create({ chat, username });
 
       return res.json(settings);
@@ -25,6 +24,7 @@ class SettingsController {
     try {
       const { id } = req.params;
 
+      const settingsService = new SettingsService();
       const setting = await settingsService.show(id);
 
       return res.json(setting);
@@ -36,6 +36,7 @@ class SettingsController {
 
   async index(req: Request, res: Response): Promise<Response> {
     try {
+      const settingsService = new SettingsService();
       const settings = await settingsService.index();
 
       return res.json(settings);
@@ -49,6 +50,7 @@ class SettingsController {
     try {
       const { id } = req.params;
 
+      const settingsService = new SettingsService();
       await settingsService.delete(id);
 
       return res.json({ message: "Configuração deletada com sucesso." });
