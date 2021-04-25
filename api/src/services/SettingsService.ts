@@ -29,6 +29,10 @@ class SettingsService {
     return await this.settingsRepository.save(settings);
   }
 
+  async findByUsername(username: string): Promise<any> {
+    return await this.settingsRepository.findOneOrFail({ username });
+  }
+
   async show(id: string): Promise<any> {
     return await this.settingsRepository.findOneOrFail(id);
   }

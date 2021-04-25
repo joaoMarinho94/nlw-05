@@ -20,6 +20,20 @@ class SettingsController {
     }
   }
 
+  async findByUsername(req: Request, res: Response): Promise<Response> {
+    try {
+      const { username } = req.params;
+
+      const settingsService = new SettingsService();
+      const setting = await settingsService.findByUsername(username);
+
+      return res.json(setting);
+    } catch (error) {
+      console.log("error: ", error);
+      return res.status(500).json({ message: "Ocorreu um erro ao buscar a configuração." });
+    }
+  }
+
   async show(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;

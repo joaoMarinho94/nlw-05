@@ -13,9 +13,8 @@ io.on("connect", socket => {
   const usersService = new UsersService();
   const messagesService = new MessagesService();
 
-  socket.on("client_first_access", async (params) => {
+  socket.on("client_first_access", async ({ text, email }: IParams) => {
     const socket_id = socket.id;
-    const { text, email } = params as IParams;
     let user_id = null;
 
     const userExists = await usersService.findByEmail(email);
@@ -31,6 +30,7 @@ io.on("connect", socket => {
       user_id = user.id;
     } else {
       user_id = userExists.id;
+
       const connection = await connectionsService.findByUserId(userExists.id);
 
       if (!connection) {

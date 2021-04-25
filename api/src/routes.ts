@@ -13,6 +13,7 @@ const routes = Router();
 routes.post("/setting", settingsController.create);
 routes.get("/settings", settingsController.index);
 routes.get("/setting/:id", settingsController.show);
+routes.get("/settings/:username", settingsController.findByUsername);
 routes.delete("/setting/:id", settingsController.delete);
 
 routes.post("/user", usersController.create);
