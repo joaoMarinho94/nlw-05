@@ -1,17 +1,30 @@
-create migrations
+#### This week a backend application was developed to create a chat with instant messages using websocket to manage the communication between the support agent and the customer who is requesting the service.
+
+### Technologies used
+ - TypeScript
+ - Nodejs
+ - Protocolo HTTP
+ - Protocolo WS
+ - Typeorm
+ - DB SQLite
+
+
+### Run Backend
+
+#### install the project dependencies
 
 ```
-yarn typeorm migration:create -n <nameMigration>
+npm install or yarn
 ```
 
-run migrations
+#### run migrations
 
 ```
 yarn typeorm migration:run
 ```
 
-revert migrations
+after
 
 ```
-yarn typeorm migration:revert
+yarn dev
 ```
