@@ -20,6 +20,17 @@ class SettingsController {
     }
   }
 
+  async update(req: Request, res: Response): Promise<Response> {
+    const { username } = req.params;
+    const { chat } = req.body;
+
+    const settingsService = new SettingsService();
+
+    await settingsService.update(username, chat);
+
+    return res.send();
+  }
+
   async findByUsername(req: Request, res: Response): Promise<Response> {
     try {
       const { username } = req.params;

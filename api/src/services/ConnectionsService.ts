@@ -25,30 +25,24 @@ class ConnectionsService {
       id,
     });
 
-    await this.connectionsRepository.save(connection);
+    return await this.connectionsRepository.save(connection);
   }
 
   async findByUserId(user_id: string): Promise<any> {
-    const connection = this.connectionsRepository.findOne({ user_id });
-
-    return connection;
+    return await this.connectionsRepository.findOne({ user_id });
   }
 
   async findAllWithoutAdmin(): Promise<any> {
-    const connections = this.connectionsRepository.find({
+    return await this.connectionsRepository.find({
       where: {
         admin_id: null,
       },
       relations: ["user"],
     });
-
-    return connections;
   }
 
   async findBySocketID(socket_id: string): Promise<any> {
-    const connection = this.connectionsRepository.findOne({ socket_id });
-
-    return connection;
+    return await this.connectionsRepository.findOne({ socket_id });
   }
 
   async updateAdminID(user_id: string, admin_id: string): Promise<any> {
